@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
         val btnAgregar = findViewById<Button>(R.id.btnAgregar)
 
 
+        //////////////TODO: Mostrar datos
+
+
         //2- Programar el boton
 
         btnAgregar.setOnClickListener {
