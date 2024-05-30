@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import paco.crudpaco.R
 import java.nio.file.attribute.AclEntry.Builder
 
@@ -22,7 +23,15 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
 
     }
 
-    
+    //Funcion para actualizar el recycler view
+    // cuando actualizo los datos
+
+    fun actualizarListaDespuesDeAcualizarDatos (uuid: String, nuevoNombre: String){
+
+        val index = Datos.indexOfFirst { it.uuid == uuid }
+        Datos[index].nombreProducto = nuevoNombre
+        notifyItemChanged(index)
+    }
 
     fun eliminarRegistro(nombreProducto: String, posicion: Int){
 
@@ -76,6 +85,13 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
             val commit = objConexion?.prepareStatement("commit")!!
 
             commit.executeUpdate()
+
+
+            withContext(Dispatchers.Main) {
+
+                actualizarListaDespuesDeAcualizarDatos(uuid, nombreProducto)
+
+            }
 
         }
 
@@ -167,6 +183,15 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
 
             val dialog = builder.create()
             dialog.show()
+
+        }
+
+
+        //darle click  a la card
+
+        holder.itemView.setOnClickListener {
+
+
 
         }
 
