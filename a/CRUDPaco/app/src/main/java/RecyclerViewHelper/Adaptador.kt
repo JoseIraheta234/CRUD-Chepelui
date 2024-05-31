@@ -4,6 +4,7 @@ import Modelo.ClaseConexion
 import Modelo.dataClassProductos
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import paco.crudpaco.Detalle_Productos
 import paco.crudpaco.R
 import java.nio.file.attribute.AclEntry.Builder
 
@@ -191,6 +193,23 @@ class Adaptador(private var Datos: List<dataClassProductos>) : RecyclerView.Adap
 
         holder.itemView.setOnClickListener {
 
+            // invoco el contexto
+
+            val context = holder.itemView.context
+
+            // cambiamos de pantalla
+            // abro la pantalla de detalle productos
+
+            val pantallaDetalles = Intent(context, Detalle_Productos:: class.java)
+
+            //aqui, antes de abrir la nueva pantalla, ke mando los parametros
+
+            pantallaDetalles.putExtra("uuid", item.uuid)
+            pantallaDetalles.putExtra("nombre", item.nombreProducto)
+            pantallaDetalles.putExtra("precio", item.precio)
+            pantallaDetalles.putExtra("cantidad", item.cantidad)
+
+            context.startActivity(pantallaDetalles)
 
 
         }
